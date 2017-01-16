@@ -72,7 +72,6 @@ local.properties
 # 
 MANIFEST.MF
 pom.properties
-pom.xml
 
 
 ### Java ###
