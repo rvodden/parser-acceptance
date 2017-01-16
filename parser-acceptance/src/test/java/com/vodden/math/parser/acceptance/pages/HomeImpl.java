@@ -1,13 +1,18 @@
 package com.vodden.math.parser.acceptance.pages;
 
+import javax.inject.Inject;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-import net.serenitybdd.core.annotations.findby.FindBy;
-import net.serenitybdd.core.pages.PageObject;
-import net.thucydides.core.annotations.DefaultUrl;
-
-@DefaultUrl("http://localhost:8080/parser-ui/faces/parser.xhtml")
-public class HomeImpl extends PageObject  {
+public class HomeImpl implements Home {
+	
+	private static final String DEFAULT_URL = "http://localhost:8080/parser-ui/faces/parser.xhtml";
+	
+	private String url;
+	private WebDriver webDriver;
 
 	@FindBy(id="form:expression")
 	WebElement formExpression;
@@ -17,10 +22,33 @@ public class HomeImpl extends PageObject  {
 	
 	@FindBy(id="form:result")
 	WebElement resultField;
+	
+	public HomeImpl(WebDriver webDriver, String url) {
+		this.url = url;
+		this.webDriver = webDriver;
+		PageFactory.initElements(webDriver, this);
+	}
+	
+	@Inject
+	public HomeImpl(WebDriver webDriver) {
+		this(webDriver,DEFAULT_URL);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.vodden.math.parser.acceptance.pages.Home#open()
+	 */
+	@Override
+	public void open() {
+		webDriver.get(url);
+	}
 
     /* (non-Javadoc)
 	 * @see com.vodden.math.parseracceptance.pages.Home#calculate(java.lang.String)
 	 */
+	/* (non-Javadoc)
+	 * @see com.vodden.math.parser.acceptance.pages.Home#calculate(java.lang.String)
+	 */
+	@Override
 	public void calculate(String expression) {
     	formExpression.clear();
     	formExpression.sendKeys(expression);
@@ -30,8 +58,12 @@ public class HomeImpl extends PageObject  {
     /* (non-Javadoc)
 	 * @see com.vodden.math.parseracceptance.pages.Home#getResult()
 	 */
-	public Double getResult() {
-    	return Double.parseDouble( resultField.getText() );
+	/* (non-Javadoc)
+	 * @see com.vodden.math.parser.acceptance.pages.Home#getResult()
+	 */
+	@Override
+	public Boolean checkResult(Double value) {
+    	return value.equals(Double.parseDouble( resultField.getText() ));
     }
 
 }
