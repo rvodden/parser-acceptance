@@ -16,7 +16,7 @@ public class HomeImpl implements Home {
 
 	@FindBy(id="form:expression")
 	WebElement formExpression;
-	
+
 	@FindBy(id="form:submit")
 	WebElement submitButton;
 	
@@ -65,5 +65,11 @@ public class HomeImpl implements Home {
 	public Boolean checkResult(Double value) {
     	return value.equals(Double.parseDouble( resultField.getText() ));
     }
+
+	@Override
+	public Boolean findError(String message) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

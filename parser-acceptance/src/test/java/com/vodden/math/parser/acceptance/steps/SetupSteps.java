@@ -86,8 +86,7 @@ public class SetupSteps {
 				tomcat.stop();
 			}
 			tomcat.destroy();
-			
-			WebDriverProvider.closeWebDriver();
+
 		}
 	}
 
